@@ -23,8 +23,13 @@ while True:
 soup = BeautifulSoup(driver.page_source, 'lxml')
 charts_covid = soup.find_all('div', class_ = 'igc-graph-group')
 
+df = pd.DataFrame({'Link':['']})
+
 for chart in charts_covid:
-    link = chart.find('rect', class_ = 'igc-crosshair-overlay').get('href')
-    link
+    try:
+        link = chart.find('rect', class_ = 'igc-crosshair-overlay').get('href')
+        df = df.append({'Link':link}, ingnore_index = True)
+    except:
+        pass
     break
 
